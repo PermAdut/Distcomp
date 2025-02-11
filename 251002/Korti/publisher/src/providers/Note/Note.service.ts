@@ -11,6 +11,7 @@ import { CollectionType, StorageService } from 'src/storage/database';
 import { NoteResponseTo } from './Dto/NoteResponseTo';
 import { plainToInstance } from 'class-transformer';
 import { NoteRequestTo, UpdateNoteTo } from './Dto/NoteRequestTo';
+import { Article } from 'src/entities/Article';
 
 @Injectable()
 export class NoteService {
@@ -29,6 +30,10 @@ export class NoteService {
 
   async createNote(item: NoteRequestTo): Promise<Note> {
     try {
+      await StorageService.getById<Article>(
+        CollectionType.ARTICLES,
+        item.articleId,
+      );
       const note = await StorageService.add<Note>(
         CollectionType.NOTES,
         item as Note,

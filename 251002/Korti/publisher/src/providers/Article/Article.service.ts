@@ -103,7 +103,8 @@ export class ArticleService {
         body.id,
       );
       const modArticle: Article = {
-        ...article,
+        ...body,
+        created: article.created,
         modified: modDate,
       };
       await StorageService.update<Article>(CollectionType.ARTICLES, modArticle);
